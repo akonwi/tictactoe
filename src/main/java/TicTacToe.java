@@ -21,11 +21,13 @@ public class TicTacToe {
 
     public void start() {
         printStream.println(board.getBoard());
-        int move = promptPlayer1();
-        player1Move(move);
-        move = promptPlayer2();
-        player2Move(move);
-        printStream.println("Game is a draw");
+        while (!board.isFull()) {
+            int move = promptPlayer1();
+            player1Move(move);
+            move = promptPlayer2();
+            player2Move(move);
+            printStream.println("Game is a draw");
+        }
     }
 
     public int promptPlayer1() {
@@ -39,15 +41,19 @@ public class TicTacToe {
     }
 
     public void player1Move(int location) {
-        if (!board.placeX(location)) {
+        boolean failed = !board.placeX(location);
+        while (failed) {
            printStream.println("That location cannot be played");
+            failed = !board.placeX(promptPlayer1());
         }
         printStream.println(board.getBoard());
     }
 
     public void player2Move(int location) {
-        if (!board.placeO(location)) {
+        boolean failed = !board.placeO(location);
+        while (failed) {
             printStream.println("That location cannot be played");
+            failed = !board.placeO(promptPlayer2());
         }
         printStream.println(board.getBoard());
     }
