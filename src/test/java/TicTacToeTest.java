@@ -55,4 +55,9 @@ public class TicTacToeTest {
         verify(board).placeX(1);
     }
 
+    @Test
+    public void shouldPromptPlayer2ToMakeAMoveAfterPlayer1() {
+        game.start();
+        verify(printStream).println("Player 2: Enter a number between 1 and 9 to make a move");
+    }
 }

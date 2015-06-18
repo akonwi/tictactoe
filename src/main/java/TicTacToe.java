@@ -7,6 +7,7 @@ import java.nio.Buffer;
  * Created by angoh on 6/18/15.
  */
 public class TicTacToe {
+    private String prompt;
     private TicTacToeBoard board;
     private PrintStream printStream;
     private BufferedReader reader;
@@ -15,16 +16,34 @@ public class TicTacToe {
         this.board = board;
         this.printStream = printStream;
         this.reader = reader;
+        this.prompt = "Enter a number between 1 and 9 to make a move";
     }
 
     public void start() {
         printStream.println(board.getBoard());
-        printStream.println("Enter a number between 1 and 9 to make a move");
-        player1Move(getUserInput());
+        int move = promptPlayer1();
+        player1Move(move);
+        move = promptPlayer2();
+        player2Move(move);
     }
 
-    private void player1Move(int location) {
+    public int promptPlayer1() {
+        printStream.println("Player 1: " + prompt);
+        return getUserInput();
+    }
+
+    public int promptPlayer2() {
+        printStream.println("Player 2: " + prompt);
+        return getUserInput();
+    }
+
+    public void player1Move(int location) {
         board.placeX(location);
+        printStream.println(board.getBoard());
+    }
+
+    public void player2Move(int location) {
+        board.placeO(location);
         printStream.println(board.getBoard());
     }
 
