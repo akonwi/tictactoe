@@ -38,15 +38,31 @@ public class TicTacToeBoard {
         return makeBoard();
     }
 
-    public void placeX(int i) {
+    private boolean place(int i, String move) {
         if (i > 0) {
-            locations[i] = "X";
+            if (locations[i] == null || locations[i].isEmpty()) {
+                locations[i] = move;
+                return true;
+            }
         }
+        return false;
     }
 
-    public void placeO(int i) {
-        if (i > 0) {
-            locations[i] = "O";
+    public boolean placeX(int location) {
+        return place(location, "X");
+    }
+
+    public boolean placeO(int location) {
+        return place(location, "O");
+    }
+
+    public boolean isFull() {
+        for(int i = 1; i < 10; i++) {
+            String location = locations[i];
+            if (location == null || location.isEmpty()) {
+                return false;
+            }
         }
+        return true;
     }
 }

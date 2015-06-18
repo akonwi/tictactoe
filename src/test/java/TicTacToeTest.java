@@ -29,35 +29,45 @@ public class TicTacToeTest {
     }
 
     @Test
-    public void shouldPrintBoardOnStart() {
-        game.start();
-        verify(printStream, atLeastOnce()).println(board.getBoard());
-    }
-
-    @Test
-    public void shouldPromptPlayer1ToMakeAMove() {
-        game.start();
-        verify(printStream).println("Enter a number between 1 and 9 to make a move");
+    public void shouldPromptPlayer1ToMakeAMove() throws IOException {
+        game.promptPlayer1();
+        verify(printStream).println("Player 1: Enter a number between 1 and 9 to make a move");
     }
 
     @Test
     public void shouldHandleInvalidUserInputAndPrintBoard() throws IOException {
         when(reader.readLine()).thenReturn("a");
-        game.start();
-        verify(printStream, times(2)).println(board.getBoard());
+        game.player1Move(game.getUserInput());
+        verify(printStream, atLeastOnce()).println(board.getBoard());
     }
 
     @Test
     public void shouldHandleValidUserInputAndTellBoard() throws IOException {
         when(reader.readLine()).thenReturn("1");
         game.start();
-        verify(printStream, times(2)).println(board.getBoard());
+        verify(printStream, atLeastOnce()).println(board.getBoard());
         verify(board).placeX(1);
     }
 
     @Test
-    public void shouldPromptPlayer2ToMakeAMoveAfterPlayer1() {
+    public void shouldPromptPlayer2ToMakeAMoveAfterPlayer1() throws IOException {
+        when(reader.readLine()).thenReturn("1");
+        when(board.placeO(anyInt())).thenReturn(true);
         game.start();
         verify(printStream).println("Player 2: Enter a number between 1 and 9 to make a move");
+    }
+
+    @Test
+    public void shouldLetUserKnowABoxCantBePlayed() throws IOException {
+        game.player1Move(1);
+        game.player2Move(1);
+        verify(printStream, atLeastOnce()).println("That location cannot be played");
+    }
+
+    @Test
+    public void shouldLetPlayersKnowWhenBoardIsFull() {
+        when(board.isFull()).thenReturn(true);
+        game.start();
+        verify(printStream).println("Game is a draw");
     }
 }

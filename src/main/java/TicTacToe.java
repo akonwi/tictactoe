@@ -25,6 +25,7 @@ public class TicTacToe {
         player1Move(move);
         move = promptPlayer2();
         player2Move(move);
+        printStream.println("Game is a draw");
     }
 
     public int promptPlayer1() {
@@ -38,12 +39,16 @@ public class TicTacToe {
     }
 
     public void player1Move(int location) {
-        board.placeX(location);
+        if (!board.placeX(location)) {
+           printStream.println("That location cannot be played");
+        }
         printStream.println(board.getBoard());
     }
 
     public void player2Move(int location) {
-        board.placeO(location);
+        if (!board.placeO(location)) {
+            printStream.println("That location cannot be played");
+        }
         printStream.println(board.getBoard());
     }
 
