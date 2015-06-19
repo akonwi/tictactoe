@@ -10,7 +10,7 @@ public class Main {
     public static void main(String[] args) {
         TicTacToeBoard board = new TicTacToeBoard();
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        ArrayList<Player> players = new ArrayList<Player>();
+        ArrayList<Player> players = new ArrayList<>();
         players.add(new Player("Player 1", "X", board, System.out, reader));
         players.add(new Player("Player 2", "0", board, System.out, reader));
         TicTacToe game = new TicTacToe(board, System.out, players);

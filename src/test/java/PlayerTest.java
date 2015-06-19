@@ -53,20 +53,7 @@ public class PlayerTest {
 
     @Test
     public void shouldContinuePromptingUserUntilSuccessfulMove() throws IOException {
-        when(reader.readLine()).thenAnswer(new Answer() {
-            private int count = 0;
-
-            @Override
-            public String answer(InvocationOnMock invocationOnMock) throws Throwable {
-                count++;
-                if (count == 1) {
-                    return "a";
-                }
-                else {
-                    return "1";
-                }
-            }
-        });
+        when(reader.readLine()).thenReturn("a", "1");
         when(board.place(1, "X")).thenReturn(true);
         boolean played = playerX.playTurn();
         assertTrue(played);

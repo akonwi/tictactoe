@@ -5,12 +5,10 @@ import java.io.PrintStream;
  */
 public class TicTacToeBoard {
     private String board;
-    private PrintStream printStream;
     private String[] locations;
 
     public TicTacToeBoard() {
         locations = new String[10];
-//        board = "   |   |   \n-----------\n   |   |   \n-----------\n   |   |   ";
         makeBoard();
     }
 

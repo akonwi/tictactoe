@@ -8,11 +8,8 @@ import java.util.List;
  */
 public class TicTacToe {
     private List<Player> players;
-    private Player player1;
-    private Player player2;
     private TicTacToeBoard board;
     private PrintStream printStream;
-    private BufferedReader reader;
     private boolean notFull;
 
     public TicTacToe(TicTacToeBoard board, PrintStream printStream, List<Player> players) {
