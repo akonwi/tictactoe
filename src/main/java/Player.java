@@ -28,6 +28,7 @@ public class Player {
                 break;
             }
             printStream.println("That location cannot be played");
+            printStream.println(board.getBoard());
         }
         return true;
     }

@@ -51,21 +51,6 @@ public class TicTacToeTest {
         verify(player1).playTurn();
         verify(player2).playTurn();
     }
-//    @Test
-//    public void shouldPromptPlayer2ToMakeAMoveAfterPlayer1() throws IOException {
-//        when(reader.readLine()).thenReturn("1");
-//        when(board.placeO(anyInt())).thenReturn(true);
-//        game.start();
-//        verify(printStream).println("Player 2: Enter a number between 1 and 9 to make a move");
-//    }
-
-//    @Test
-//    public void shouldLetUserKnowABoxCantBePlayed() throws IOException {
-//        when(board.placeO(2)).thenReturn(false);
-//        when(reader.readLine()).thenReturn("2");
-////        game.player2Move();
-//        verify(printStream, atLeastOnce()).println("That location cannot be played");
-//    }
 
     @Test
     public void shouldLetPlayersKnowWhenBoardIsFull() {
