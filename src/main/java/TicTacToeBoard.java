@@ -38,7 +38,7 @@ public class TicTacToeBoard {
         return makeBoard();
     }
 
-    private boolean place(int i, String move) {
+    public boolean place(int i, String move) {
         if (i > 0) {
             if (locations[i] == null || locations[i].isEmpty()) {
                 locations[i] = move;
