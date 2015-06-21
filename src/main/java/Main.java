@@ -11,7 +11,7 @@ public class Main {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         ArrayList<Player> players = new ArrayList<>();
         players.add(new Player("Player 1", "X", board));
-        players.add(new Player("Player 2", "0", board));
+        players.add(new Player("Player 2", "O", board));
         TicTacToe game = new TicTacToe(board, System.out, reader, players);
         game.start();
     }

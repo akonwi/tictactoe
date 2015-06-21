@@ -62,6 +62,9 @@ public class TicTacToeBoard {
             String lastMark = getFirstMark(i);
             if (lastMark == null) return false;
             for (int j = i; j < 9; j++) {
+                if (i > 5) {
+                    return false;
+                }
                 String currentMark = locations.get(j).trim();
                 if (!currentMark.isEmpty()) {
                     if (currentMark.equals(lastMark)) {
@@ -96,12 +99,17 @@ public class TicTacToeBoard {
     private boolean nextTwoMatchVertically(int start, String lastMark) {
         boolean aChance = true;
         int next = start + 3;
-        while (aChance && next < start + 7) {
-            String nextMark = locations.get(next).trim();
-            if (nextMark.isEmpty() || !nextMark.equals(lastMark)) {
-                aChance = false;
+        if (start < 3) {
+            while (aChance && next < start + 7 && next < 9) {
+                String nextMark = locations.get(next).trim();
+                if (nextMark.isEmpty() || !nextMark.equals(lastMark)) {
+                    aChance = false;
+                }
+                next += 3;
             }
-            next += 3;
+        }
+        else {
+            aChance = false;
         }
         return aChance;
     }
@@ -110,12 +118,17 @@ public class TicTacToeBoard {
     private boolean nextTwoMatchHorizontally(int start, String lastMark) {
         boolean aChance = true;
         int next = start + 1;
-        while (aChance && next < start + 3 && next < 9) {
-            String nextMark = locations.get(next).trim();
-            if (nextMark.isEmpty() || !nextMark.equals(lastMark)) {
-                aChance = false;
+        if (start == 0 || start == 3 || start == 6) {
+            while (aChance && next < start + 3 && next < 9) {
+                String nextMark = locations.get(next).trim();
+                if (nextMark.isEmpty() || !nextMark.equals(lastMark)) {
+                    aChance = false;
+                }
+                next++;
             }
-            next++;
+        }
+        else {
+            aChance = false;
         }
         return aChance;
     }
