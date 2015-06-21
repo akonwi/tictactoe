@@ -1,5 +1,3 @@
-import java.io.PrintStream;
-
 /**
  * Created by angoh on 6/18/15.
  */
@@ -15,12 +13,12 @@ public class TicTacToeBoard {
     public String makeBoard() {
         board = "";
         for (int i = 1; i < 10; i++) {
-            String move = locations[i];
-            if (move == null || move.isEmpty()) {
+            String mark = locations[i];
+            if (mark == null || mark.isEmpty()) {
                 board += "   ";
             }
             else {
-                board += " " + move + " ";
+                board += " " + mark + " ";
             }
             if (i == 0 || i % 3 != 0) {
                 board += "|";
@@ -46,14 +44,6 @@ public class TicTacToeBoard {
         return false;
     }
 
-    public boolean placeX(int location) {
-        return place(location, "X");
-    }
-
-    public boolean placeO(int location) {
-        return place(location, "O");
-    }
-
     public boolean isFull() {
         for(int i = 1; i < 10; i++) {
             String location = locations[i];
@@ -62,5 +52,75 @@ public class TicTacToeBoard {
             }
         }
         return true;
+    }
+
+    public boolean isWon() {
+       return wonHorizontally() || wonVertically();
+    }
+
+    private boolean wonVertically() {
+        String lastMark = getFirstMark();
+        int count = 0;
+        for (int i = 1; i < 10; i++) {
+            String currentMark = locations[i];
+            if (currentMark != null && !currentMark.isEmpty()) {
+                if (count == 3) return true;
+                if (currentMark.equals(lastMark)) {
+                    return nextTwoMatchVertically(i);
+                }
+            }
+        }
+        return false;
+    }
+
+    private boolean wonHorizontally() {
+        String lastMove = getFirstMark();
+        int count = 0;
+        for (int i = 1; i < 10; i++) {
+            String currentMove = locations[i];
+            if (currentMove != null && !currentMove.isEmpty()) {
+                if (count == 3) {
+                    return true;
+                }
+                if (currentMove.equals(lastMove)) {
+                    return nextTwoMatchHorizontally(i);
+                }
+            }
+        }
+        return false;
+    }
+
+    private boolean nextTwoMatchVertically(int start) {
+        boolean aChance = true;
+        int next = start + 3;
+        while (aChance && next < start + 7) {
+            if (locations[next] == null || locations[next].isEmpty()) {
+                aChance = false;
+            }
+            next += 3;
+        }
+        return aChance;
+    }
+
+
+    private boolean nextTwoMatchHorizontally(int start) {
+        boolean aChance = true;
+        int next = start + 1;
+        while (aChance && next < start + 3) {
+            if (locations[next] == null || locations[next].isEmpty()) {
+                aChance = false;
+            }
+            next++;
+        }
+        return aChance;
+    }
+
+    private String getFirstMark() {
+        for (int i = 1; i < 10; i ++) {
+            if (locations[i] != null && !locations[i].isEmpty()) {
+                return locations[i];
+            }
+        }
+        return null;
     }
 }
