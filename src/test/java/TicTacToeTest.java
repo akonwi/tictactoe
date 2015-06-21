@@ -99,4 +99,17 @@ public class TicTacToeTest {
         game.start();
         verify(printStream).println(contains("won"));
     }
+
+    @Test
+    public void shouldSayWhoTheWinnerIsWhenItIsWon() {
+        when(board.isWon()).thenReturn(true);
+        when(board.winningMark()).thenReturn("X");
+        player1 = mock(Player.class);
+        when(player1.name()).thenReturn("Player 1");
+        when(player1.mark()).thenReturn("X");
+        players.add(player1);
+        game.start();
+        verify(printStream).println(contains(player1.name()));
+
+    }
 }

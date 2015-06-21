@@ -1,5 +1,3 @@
-import java.io.PrintStream;
-
 /**
  * Created by angoh on 6/18/15.
  */
@@ -16,6 +14,10 @@ public class Player {
 
     public String name() {
         return name;
+    }
+
+    public String mark() {
+        return mark;
     }
 
     public boolean playTurn(int location) {

@@ -8,8 +8,10 @@ import static java.lang.String.format;
  */
 public class TicTacToeBoard {
     public List<String> locations;
+    private String winner;
 
     public TicTacToeBoard() {
+        winner = null;
         locations = Arrays.asList(
                 " ", " ", " ",
                 " ", " ", " ",
@@ -61,12 +63,14 @@ public class TicTacToeBoard {
         String topLeftMark = locations.get(0).trim();
         if (!topLeftMark.isEmpty()) {
             if (locations.get(4).trim().equals(locations.get(8).trim()) && topLeftMark.equals(locations.get(4).trim())) {
+                winner = topLeftMark;
                 return true;
             }
         }
         String topRightMark = locations.get(2);
         if (!topRightMark.isEmpty()) {
             if (locations.get(4).trim().equals(locations.get(6).trim()) && topRightMark.equals(locations.get(4).trim())) {
+                winner = topRightMark;
                 return true;
             }
         }
@@ -85,6 +89,7 @@ public class TicTacToeBoard {
                 if (!currentMark.isEmpty()) {
                     if (currentMark.equals(lastMark)) {
                         if (nextTwoMatchVertically(j, lastMark)) {
+                            winner = currentMark;
                             return true;
                         }
                     }
@@ -103,6 +108,7 @@ public class TicTacToeBoard {
                 if (!currentMark.isEmpty()) {
                     if (currentMark.equals(lastMark)) {
                         if (nextTwoMatchHorizontally(j, lastMark)) {
+                            winner = currentMark;
                             return true;
                         }
                     }
@@ -156,5 +162,9 @@ public class TicTacToeBoard {
             }
         }
         return null;
+    }
+
+    public String winningMark() {
+        return winner;
     }
 }

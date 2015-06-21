@@ -34,9 +34,17 @@ public class TicTacToe {
             printStream.println("Game is a draw");
         }
         else {
-            printStream.println("Someone won!");
+            printWinnerWon();
         }
         printStream.println(board.getBoard());
+    }
+
+    private void printWinnerWon() {
+        for (Player player : players) {
+            if (player.mark().equals(board.winningMark())) {
+                printStream.println(player.name() + " wins!");
+            }
+        }
     }
 
     public void play() {
