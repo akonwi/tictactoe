@@ -58,12 +58,17 @@ public class TicTacToeBoard {
     }
 
     private boolean wonVertically() {
-        String lastMark = getFirstMark();
         for (int i = 0; i < 9; i++) {
-            String currentMark = locations.get(i).trim();
-            if (!currentMark.isEmpty()) {
-                if (currentMark.equals(lastMark)) {
-                    return nextTwoMatchVertically(i, lastMark);
+            String lastMark = getFirstMark(i);
+            if (lastMark == null) return false;
+            for (int j = i; j < 9; j++) {
+                String currentMark = locations.get(j).trim();
+                if (!currentMark.isEmpty()) {
+                    if (currentMark.equals(lastMark)) {
+                        if (nextTwoMatchVertically(j, lastMark)) {
+                            return true;
+                        }
+                    }
                 }
             }
         }
@@ -71,12 +76,17 @@ public class TicTacToeBoard {
     }
 
     private boolean wonHorizontally() {
-        String lastMove = getFirstMark();
         for (int i = 0; i < 9; i++) {
-            String currentMove = locations.get(i);
-            if (currentMove != null && !currentMove.isEmpty()) {
-                if (currentMove.equals(lastMove)) {
-                    return nextTwoMatchHorizontally(i, lastMove);
+            String lastMark = getFirstMark(i);
+            if (lastMark == null) return false;
+            for (int j = i; j < 9; j++) {
+                String currentMark = locations.get(j).trim();
+                if (!currentMark.isEmpty()) {
+                    if (currentMark.equals(lastMark)) {
+                        if (nextTwoMatchHorizontally(j, lastMark)) {
+                            return true;
+                        }
+                    }
                 }
             }
         }
@@ -100,7 +110,7 @@ public class TicTacToeBoard {
     private boolean nextTwoMatchHorizontally(int start, String lastMark) {
         boolean aChance = true;
         int next = start + 1;
-        while (aChance && next < start + 3) {
+        while (aChance && next < start + 3 && next < 9) {
             String nextMark = locations.get(next).trim();
             if (nextMark.isEmpty() || !nextMark.equals(lastMark)) {
                 aChance = false;
@@ -110,8 +120,8 @@ public class TicTacToeBoard {
         return aChance;
     }
 
-    private String getFirstMark() {
-        for (int i = 0; i < 9; i ++) {
+    private String getFirstMark(int start) {
+        for (int i = start; i < 9; i ++) {
             if (!locations.get(i).trim().isEmpty()) {
                 return locations.get(i);
             }
