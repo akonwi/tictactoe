@@ -97,4 +97,20 @@ public class TicTacToeBoardTest {
         }
         assertThat(board.isWon(), is(true));
     }
+
+    @Test
+    public void shouldKnowWhenAPlayerHasWonDiagonallyFromTopLeft() {
+        board.place(1, "X");
+        board.place(5, "X");
+        board.place(9, "X");
+        assertThat(board.isWon(), is(true));
+    }
+
+    @Test
+    public void shouldKnowWhenAPlayerHasWonDiagonallyFromTopRight() {
+        board.place(3, "X");
+        board.place(5, "X");
+        board.place(7, "X");
+        assertThat(board.isWon(), is(true));
+    }
 }
