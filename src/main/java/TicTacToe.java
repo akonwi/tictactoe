@@ -21,12 +21,13 @@ public class TicTacToe {
         this.printStream = printStream;
         this.reader = reader;
         this.players = players;
-        notFull = !board.isFull();
     }
 
     public void start() {
+        notFull = !board.isFull();
+        notWon = !board.isWon();
         printStream.println(board.getBoard());
-        while (notFull) {
+        while (notFull && notWon) {
             play();
         }
         if (!notFull) {
@@ -51,7 +52,8 @@ public class TicTacToe {
                 }
             }
             notFull = !board.isFull();
-            if (!notFull)
+            notWon = !board.isWon();
+            if (!notFull || !notWon)
                 return;
             printStream.println(board.getBoard());
         }

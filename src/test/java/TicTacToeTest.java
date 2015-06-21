@@ -95,17 +95,8 @@ public class TicTacToeTest {
 
     @Test
     public void shouldStopGameWhenItIsWon() throws IOException {
-        when(reader.readLine()).thenReturn("1", "2", "3");
-        when(board.isFull()).thenReturn(false);
-        when(board.place(1, "X")).thenReturn(true);
-        when(board.place(2, "X")).thenReturn(true);
-        when(board.place(3, "X")).thenReturn(true);
-        when(board.isWon()).thenReturn(false, false, false, false, true);
-        player1 = mock(Player.class);
-        when(player1.name()).thenReturn("Player 1");
-        when(player1.playTurn(anyInt())).thenReturn(true);
-        players.add(player1);
+        when(board.isWon()).thenReturn(true);
         game.start();
-        verify(printStream).println("Someone won");
+        verify(printStream).println(contains("won"));
     }
 }

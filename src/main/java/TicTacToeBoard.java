@@ -7,8 +7,7 @@ import static java.lang.String.format;
  * Created by angoh on 6/18/15.
  */
 public class TicTacToeBoard {
-    private String board;
-    private List<String> locations;
+    public List<String> locations;
 
     public TicTacToeBoard() {
         locations = Arrays.asList(
@@ -16,25 +15,21 @@ public class TicTacToeBoard {
                 " ", " ", " ",
                 " ", " ", " "
         );
-        makeBoard();
     }
 
-    public String makeBoard() {
-        board = " %s | %s | %s \n" +
+    public String getBoard() {
+        String boardString =
+                " %s | %s | %s \n" +
                 "-----------\n" +
                 " %s | %s | %s \n" +
                 "-----------\n" +
                 " %s | %s | %s ";
-        board = format(board,
+        boardString = format(boardString,
                 locations.get(0), locations.get(1), locations.get(2),
                 locations.get(3), locations.get(4), locations.get(5),
                 locations.get(6), locations.get(7), locations.get(8)
                 );
-        return board;
-    }
-
-    public String getBoard() {
-        return makeBoard();
+        return boardString;
     }
 
     public boolean place(int i, String move) {
@@ -64,13 +59,11 @@ public class TicTacToeBoard {
 
     private boolean wonVertically() {
         String lastMark = getFirstMark();
-        int count = 0;
         for (int i = 0; i < 9; i++) {
             String currentMark = locations.get(i).trim();
             if (!currentMark.isEmpty()) {
-                if (count == 3) return true;
                 if (currentMark.equals(lastMark)) {
-                    return nextTwoMatchVertically(i);
+                    return nextTwoMatchVertically(i, lastMark);
                 }
             }
         }
@@ -79,26 +72,23 @@ public class TicTacToeBoard {
 
     private boolean wonHorizontally() {
         String lastMove = getFirstMark();
-        int count = 0;
         for (int i = 0; i < 9; i++) {
             String currentMove = locations.get(i);
             if (currentMove != null && !currentMove.isEmpty()) {
-                if (count == 3) {
-                    return true;
-                }
                 if (currentMove.equals(lastMove)) {
-                    return nextTwoMatchHorizontally(i);
+                    return nextTwoMatchHorizontally(i, lastMove);
                 }
             }
         }
         return false;
     }
 
-    private boolean nextTwoMatchVertically(int start) {
+    private boolean nextTwoMatchVertically(int start, String lastMark) {
         boolean aChance = true;
         int next = start + 3;
         while (aChance && next < start + 7) {
-            if (locations.get(next) == null || locations.get(next).isEmpty()) {
+            String nextMark = locations.get(next).trim();
+            if (nextMark.isEmpty() || !nextMark.equals(lastMark)) {
                 aChance = false;
             }
             next += 3;
@@ -107,11 +97,12 @@ public class TicTacToeBoard {
     }
 
 
-    private boolean nextTwoMatchHorizontally(int start) {
+    private boolean nextTwoMatchHorizontally(int start, String lastMark) {
         boolean aChance = true;
         int next = start + 1;
         while (aChance && next < start + 3) {
-            if (locations.get(next) == null || locations.get(next).isEmpty()) {
+            String nextMark = locations.get(next).trim();
+            if (nextMark.isEmpty() || !nextMark.equals(lastMark)) {
                 aChance = false;
             }
             next++;

@@ -65,7 +65,7 @@ public class TicTacToeBoardTest {
     }
 
     @Test
-    public void shouldKnowWhenAPlayerHasWonWithThreeHorizontally() {
+    public void shouldKnowWhenAPlayerHasWonHorizontallyStartingAtPositionOne() {
         for (int i = 1; i < 4; i++) {
             board.place(i, "X");
         }
@@ -73,8 +73,17 @@ public class TicTacToeBoardTest {
     }
 
     @Test
-    public void shouldKnowWhenAPlayerHasWonWithThreeVertically() {
-        for (int i = 0; i < 9; i += 3) {
+    public void shouldKnowWhenAPlayerHasWonHorizontallyStartingAtPositionThree() {
+        board.locations.set(1, "O");
+        for (int i = 3; i < 8; i++) {
+            board.place(i, "X");
+        }
+        assertThat(board.isWon(), is(true));
+    }
+
+    @Test
+    public void shouldKnowWhenAPlayerHasWonWithThreeVerticallyStartingAtOne() {
+        for (int i = 1; i < 9; i += 3) {
             board.place(i, "X");
         }
         assertThat(board.isWon(), is(true));
