@@ -74,7 +74,7 @@ public class TicTacToeBoardTest {
 
     @Test
     public void shouldKnowWhenAPlayerHasWonWithThreeVertically() {
-        for (int i = 1; i < 8; i += 3) {
+        for (int i = 0; i < 9; i += 3) {
             board.place(i, "X");
         }
         assertThat(board.isWon(), is(true));

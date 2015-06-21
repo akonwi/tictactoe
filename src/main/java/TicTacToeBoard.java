@@ -1,32 +1,35 @@
+import java.util.Arrays;
+import java.util.List;
+
+import static java.lang.String.format;
+
 /**
  * Created by angoh on 6/18/15.
  */
 public class TicTacToeBoard {
     private String board;
-    private String[] locations;
+    private List<String> locations;
 
     public TicTacToeBoard() {
-        locations = new String[10];
+        locations = Arrays.asList(
+                " ", " ", " ",
+                " ", " ", " ",
+                " ", " ", " "
+        );
         makeBoard();
     }
 
     public String makeBoard() {
-        board = "";
-        for (int i = 1; i < 10; i++) {
-            String mark = locations[i];
-            if (mark == null || mark.isEmpty()) {
-                board += "   ";
-            }
-            else {
-                board += " " + mark + " ";
-            }
-            if (i == 0 || i % 3 != 0) {
-                board += "|";
-            }
-            else if (i % 3 == 0 && i < 9) {
-                board += "\n-----------\n";
-            }
-        }
+        board = " %s | %s | %s \n" +
+                "-----------\n" +
+                " %s | %s | %s \n" +
+                "-----------\n" +
+                " %s | %s | %s ";
+        board = format(board,
+                locations.get(0), locations.get(1), locations.get(2),
+                locations.get(3), locations.get(4), locations.get(5),
+                locations.get(6), locations.get(7), locations.get(8)
+                );
         return board;
     }
 
@@ -35,9 +38,10 @@ public class TicTacToeBoard {
     }
 
     public boolean place(int i, String move) {
-        if (i > 0) {
-            if (locations[i] == null || locations[i].isEmpty()) {
-                locations[i] = move;
+        i = i - 1;
+        if (i > -1) {
+            if (locations.get(i).trim().isEmpty()) {
+                locations.set(i, move);
                 return true;
             }
         }
@@ -45,9 +49,9 @@ public class TicTacToeBoard {
     }
 
     public boolean isFull() {
-        for(int i = 1; i < 10; i++) {
-            String location = locations[i];
-            if (location == null || location.isEmpty()) {
+        for(int i = 0; i < 9; i++) {
+            String location = locations.get(i);
+            if (location.trim().isEmpty()) {
                 return false;
             }
         }
@@ -61,9 +65,9 @@ public class TicTacToeBoard {
     private boolean wonVertically() {
         String lastMark = getFirstMark();
         int count = 0;
-        for (int i = 1; i < 10; i++) {
-            String currentMark = locations[i];
-            if (currentMark != null && !currentMark.isEmpty()) {
+        for (int i = 0; i < 9; i++) {
+            String currentMark = locations.get(i).trim();
+            if (!currentMark.isEmpty()) {
                 if (count == 3) return true;
                 if (currentMark.equals(lastMark)) {
                     return nextTwoMatchVertically(i);
@@ -76,8 +80,8 @@ public class TicTacToeBoard {
     private boolean wonHorizontally() {
         String lastMove = getFirstMark();
         int count = 0;
-        for (int i = 1; i < 10; i++) {
-            String currentMove = locations[i];
+        for (int i = 0; i < 9; i++) {
+            String currentMove = locations.get(i);
             if (currentMove != null && !currentMove.isEmpty()) {
                 if (count == 3) {
                     return true;
@@ -94,7 +98,7 @@ public class TicTacToeBoard {
         boolean aChance = true;
         int next = start + 3;
         while (aChance && next < start + 7) {
-            if (locations[next] == null || locations[next].isEmpty()) {
+            if (locations.get(next) == null || locations.get(next).isEmpty()) {
                 aChance = false;
             }
             next += 3;
@@ -107,7 +111,7 @@ public class TicTacToeBoard {
         boolean aChance = true;
         int next = start + 1;
         while (aChance && next < start + 3) {
-            if (locations[next] == null || locations[next].isEmpty()) {
+            if (locations.get(next) == null || locations.get(next).isEmpty()) {
                 aChance = false;
             }
             next++;
@@ -116,9 +120,9 @@ public class TicTacToeBoard {
     }
 
     private String getFirstMark() {
-        for (int i = 1; i < 10; i ++) {
-            if (locations[i] != null && !locations[i].isEmpty()) {
-                return locations[i];
+        for (int i = 0; i < 9; i ++) {
+            if (!locations.get(i).trim().isEmpty()) {
+                return locations.get(i);
             }
         }
         return null;

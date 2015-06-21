@@ -3,6 +3,8 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.util.List;
 
+import static java.lang.Integer.*;
+
 /**
  * Created by angoh on 6/18/15.
  */
@@ -20,15 +22,12 @@ public class TicTacToe {
         this.reader = reader;
         this.players = players;
         notFull = !board.isFull();
-        notWon = !board.isWon();
     }
 
     public void start() {
         printStream.println(board.getBoard());
-        while (notFull && notWon) {
+        while (notFull) {
             play();
-            notFull = !board.isFull();
-            notWon = !board.isWon();
         }
         if (!notFull) {
             printStream.println("Game is a draw");
@@ -51,8 +50,9 @@ public class TicTacToe {
                     printStream.println(board.getBoard());
                 }
             }
-            notWon = !board.isWon();
             notFull = !board.isFull();
+            if (!notFull)
+                return;
             printStream.println(board.getBoard());
         }
     }
@@ -60,7 +60,7 @@ public class TicTacToe {
     public int getUserInput(String playerName) {
         printStream.println(playerName + ": Enter a number between 1 and 9 to make a move");
         try {
-            return Integer.parseInt(reader.readLine());
+            return validateInput(parseInt(reader.readLine()));
         } catch (IOException e) {
             return -1;
         } catch (NumberFormatException e) {
@@ -68,4 +68,10 @@ public class TicTacToe {
         }
     }
 
+    public int validateInput(int location) {
+        if (location > 9) {
+            return -1;
+        }
+        return location;
+    }
 }
